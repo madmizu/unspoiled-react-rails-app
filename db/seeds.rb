@@ -1,62 +1,48 @@
 puts "Destroying all seeds..."
 Purchase.destroy_all
-SpoilDate.destroy_all
-GroceryItem.destroy_all
-ShoppingListItem.destroy_all
 InventoryItem.destroy_all
+
+Ingredient.destroy_all
+ShoppingListItem.destroy_all
+
 Recipe.destroy_all
 RecipeIngredient.destroy_all
 
-
-puts "Creating categories..."
-cateories = ['dairy', 'meat', 'dry good', 'ready-to-eat', 'other']
-
-puts "🌱 Seeding spices..."
-    puts "Creating Purchases..."
+puts "🌱 Seeding..."
+    puts "Creating Purchases..." # date
         5.times do
             Purchase.create({purchase_date: Faker::Date.between(from: '2021-12-23', to: '2022-01-06') })
         end
 
-    puts "Creating Spoil Dates..."    
-        10.times do
-            SpoilDate.create({spoil_date: Faker::Date.between(from: '2022-01-05', to: '2022-03-28') })
-        end
-    puts "Creating Grocery Items..."
-        20.times  do
-            GroceryItem.create({item_name: Faker::Food.ingredient, purchase_id: Purchase.all.sample.id, spoil_date_id: SpoilDate.all.sample.id})
-        end
-        10.times do
-            GroceryItem.create({item_name: Faker::Food.fruits, purchase_id: Purchase.all.sample.id, spoil_date_id: SpoilDate.all.sample.id})
-        end
-        10.times do
-            GroceryItem.create({item_name: Faker::Food.vegetables, purchase_id: Purchase.all.sample.id, spoil_date_id: SpoilDate.all.sample.id})
-        end
-        10.times do
-            GroceryItem.create({item_name: Faker::Food.spice, purchase_id: Purchase.all.sample.id, spoil_date_id: SpoilDate.all.sample.id})
+    puts "Creating Inventory Items..."    #name, qty, measure, spoil_date, purchaseID
+        20.times do
+            Inventory.create({name: Faker::Food.ingredient, qty: rand(1..10),measure: Faker::Food.measurement, spoil_date: Faker::Date.between(from: '2022-03-15', to: '2022-06-28'), purchase: Purchase.all.sample.id} )
         end
 
-    puts "Creating Shopping List Items..."
-        10.times do
-            ShoppingListItem.create({quantity: rand(1..10), unit_of_measure: Faker::Food.measurement, grocery_item_id: GroceryItem.all.sample.id})
+    puts "Creating Ingredients..." #name, in_stock?, shoppingListID?
+        10.times  do
+            Ingredient.create({name: Faker::Food.ingredient, in_stock:true, shopping_list_item: ShoppingListItem.all.sample.id)
+        end
+        
+        10.times  do
+            Ingredient.create({name: Faker::Food.ingredient, in_stock:false, shopping_list_item: ShoppingListItem.all.sample.id})
         end
 
-    puts "Creating Inventory Items..."
+        5.times  do
+            Ingredient.create({name: Faker::Food.ingredient, in_stock:false, shopping_list_item: null})
+        end
+
+        5.times  do
+            Ingredient.create({name: Faker::Food.ingredient, in_stock:true, shopping_list_item: null})
+        end
+    puts "Creating Recipes..." #title, link, image
+        10.times do
+            Recipe.create({quantity: rand(1..10), unit_of_measure: Faker::Food.measurement, grocery_item_id: GroceryItem.all.sample.id})
+        end
+
+    puts "Creating Recipe Ingredients..." #qty, measure, optional?, recipeID, ingredientID
         40.times do
             InventoryItem.create({quantity: rand(1..10), unit_of_measure: Faker::Food.measurement, grocery_item_id: GroceryItem.all.sample.id})
-        end
-
-    puts "Creating Recipes..."
-        6.times do 
-            Recipe.create({recipe_name: Faker::Food.dish, link: "insert url", image: "insert photo"})
-        end
-
-    puts "Creating Recipe Ingredients..."
-        30.times do
-            RecipeIngredient.create({quantity: rand(1..10), unit_of_measure: Faker::Food.measurement, required: 'true', recipe: Recipe.all.sample, grocery_item_id: GroceryItem.all.sample.id})
-        end
-
-        10.times do
-            RecipeIngredient.create({quantity: rand(1..10), unit_of_measure: Faker::Food.measurement, required: 'false', recipe: Recipe.all.sample, grocery_item_id: GroceryItem.all.sample.id})
         end
 
 puts "✅ Done seeding!"
