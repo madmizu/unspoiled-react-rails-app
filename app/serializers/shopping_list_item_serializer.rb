@@ -1,4 +1,4 @@
 class ShoppingListItemSerializer < ActiveModel::Serializer
   attributes :id, :qty, :measure
-  has_one :ingredient
+  belongs_to :ingredient
 end
