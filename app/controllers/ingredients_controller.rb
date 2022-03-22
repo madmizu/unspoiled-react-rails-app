@@ -29,7 +29,7 @@ class IngredientsController < ApplicationController
     private 
 
         def ingredient_params
-            params.permit(:name, :in_stock, :shopping_list_item_id)
+            params.permit(:name, :in_stock)
         end
 
         def find_ingredient

@@ -11,6 +11,7 @@ class PurchasesController < ApplicationController
 
     def create
         purchase = Purchase.create!(purchase_params)
+        render json: purchase, status: :created
     end
 
     def destroy_all

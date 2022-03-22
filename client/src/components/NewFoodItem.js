@@ -3,10 +3,11 @@ import { useState } from 'react';
 
 function NewFoodItem ({ addMoreItems, newPurchaseInstance, createNewItem, itemsPurchased, setItemsPurchased, setRendering} ) {
     const [formData,setFormData] = useState({
-        item_name:'',
-        quantity:'',
-        unit_of_measure:'',
-        spoil_date:''
+        name:'',
+        qty:'',
+        measure:'',
+        spoil_date:'',
+        purchase_id: ''
     })
 
     function handleChange (e) {
@@ -16,7 +17,8 @@ function NewFoodItem ({ addMoreItems, newPurchaseInstance, createNewItem, itemsP
     async function handleAddItem (e) {
         e.preventDefault()
         setRendering("purchases")
-        itemsPurchased.push(formData)
+        const addedItem = ({...formData, purchase_id:newPurchaseInstance.id})
+        itemsPurchased.push(addedItem)
         setItemsPurchased(itemsPurchased)
         await displayNewItems()
     }
@@ -42,21 +44,25 @@ function NewFoodItem ({ addMoreItems, newPurchaseInstance, createNewItem, itemsP
     return (
         <div>
 
-
         <form onSubmit={handleAddItem}>
             <div className="newItems">
                 <h5>Add Items Purchased: </h5>
                 <div className="form-group col-xs-3">   
                     <label>Item Name</label>
-                    <input type="string" name="item_name" value={formData.item_name} onChange={handleChange}/>
+                    <input 
+                        name="name"
+                        value={formData.name}
+                        placeholder="Enter Item here..."
+                        onChange={handleChange}
+                    />
                 </div>
                 <div className="form-group col-xs-3">
                     <label>Quantity</label>
-                    <input type="number" name="quantity" value={formData.quantity} onChange={handleChange}/>
+                    <input type="number" name="qty" defaultValue={formData.qty} onChange={handleChange}/>
                 </div>
                 <div className="form-group col-xs-3">
                     <label>Unit of Measure</label>
-                    <select type="string" name="unit_of_measure" value={formData.unit_of_measure} onChange={handleChange}>
+                    <select type="string" name="measure" value={formData.measure} onChange={handleChange}>
                         <option>Select a Unit</option>
                         <option>Whole Item</option>
                         <option>Box</option>
