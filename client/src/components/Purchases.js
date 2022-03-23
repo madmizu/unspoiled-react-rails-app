@@ -1,8 +1,9 @@
 import SectionCard from './SectionCard';
 import NewFoodItem from './NewFoodItem';
+import IngredientPurchased from './IngredientPurchased';
 import { useState } from 'react';
 
-function Purchases ({returnHome, createNewPurchase, createNewItem, newPurchaseInstance}) {
+function Purchases ({returnHome, createNewPurchase, createNewItem, newPurchaseInstance, allIngredients}) {
     const [itemsPurchased, setItemsPurchased] = useState([]);
     const [rendering, setRendering] = useState("purchases");
     const [purchaseData, setPurchaseData] = useState({
@@ -40,6 +41,7 @@ function Purchases ({returnHome, createNewPurchase, createNewItem, newPurchaseIn
                     <h4>Date of Purchase {purchaseData.date} </h4>
                     {itemsPurchased[0]? 
                         <table className="table" id="inventoryTable">
+                            <h5>Items in this Purchase:</h5>
                             <thead>
                                 <tr>
                                     <th scope="col">Item Name</th>
@@ -58,9 +60,54 @@ function Purchases ({returnHome, createNewPurchase, createNewItem, newPurchaseIn
                             </tbody>
                         </table> 
                     : null }
+        {/* This component renders a form line for each ingredient in database. */}
+        <div className = "ingredientScroll" style={{height: "18%"}}>
+                 <table className="table" >
+
+                <thead className="table-warning">
+                    <tr>
+                        <th className="tableHead" scope="col">Ingredient Name</th>
+                        <th className="tableHead" scope="col">Recipes</th> 
+                        <th className="tableHead" scope="col">Click to Add to This Purchase</th>
+                    </tr>
+                </thead>
+                    <tbody id="ingredientTable">
+                    {allIngredients.map((each) => (
+                    <IngredientPurchased 
+                            createNewItem={createNewItem}
+                            itemsPurchased={itemsPurchased}
+                            setItemsPurchased={setItemsPurchased}
+                            setRendering={setRendering}
+                            newPurchaseInstance={newPurchaseInstance}
+                            ingredient={each}
+                    /> 
+            ))}
+                 
+
+
+                    {/* {itemsToRender.map(item => 
+                        <GroceryItem
+                            item={item}
+                            key={item.id}
+                            body={body}
+                            handleDelete={handleItemDelete}
+                        /> 
+                    )} */}
+
+                </tbody>
+                   </table>
+        
+        </div>
+
+
         {/* This component renders a form for each line of 'new items' user fills out. */}
                     <NewFoodItem 
-                        createNewItem={createNewItem} itemsPurchased={itemsPurchased} setItemsPurchased={setItemsPurchased} setRendering={setRendering} newPurchaseInstance={newPurchaseInstance}/> 
+                        createNewItem={createNewItem}
+                        itemsPurchased={itemsPurchased}
+                        setItemsPurchased={setItemsPurchased}
+                        setRendering={setRendering}
+                        newPurchaseInstance={newPurchaseInstance}
+                    /> 
                 </div> 
                 :
                 <div className = "purchases">
