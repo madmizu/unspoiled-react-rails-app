@@ -1,14 +1,6 @@
-import { useState } from 'react';
 
 
-function NewFoodItem ({ newPurchaseInstance, createNewItem, itemsPurchased, setItemsPurchased, setRendering} ) {
-    const [formData,setFormData] = useState({
-        name:'',
-        qty:'',
-        measure:'',
-        spoil_date:'',
-        purchase_id: ''
-    })
+function NewFoodItem ({ newPurchaseInstance, createNewItem, itemsPurchased, setItemsPurchased, setRendering, formData, setFormData, setPrompt, prompt, addFromIngredients} ) {
 
     function handleChange (e) {
 
@@ -17,11 +9,22 @@ function NewFoodItem ({ newPurchaseInstance, createNewItem, itemsPurchased, setI
 
     async function handleAddItem (e) {
         e.preventDefault()
+        if(prompt === "edit") {
+            console.log(addFromIngredients)
+        }
         setRendering("purchases")
         const addedItem = ({...formData, purchase_id:newPurchaseInstance.id})
         itemsPurchased.push(addedItem)
         setItemsPurchased(itemsPurchased)
         await displayNewItems()
+        setFormData({
+            name:'',
+            qty:'',
+            measure:'',
+            spoil_date:'',
+            purchase_id: ''
+        })
+        setPrompt("new")
     }
 
     function displayNewItems () {
@@ -59,7 +62,7 @@ function NewFoodItem ({ newPurchaseInstance, createNewItem, itemsPurchased, setI
                 </div>
                 <div className="form-group col-xs-3">
                     <label>Quantity</label>
-                    <input type="number" name="qty" defaultValue={formData.qty} onChange={handleChange}/>
+                    <input type="number" name="qty" value={formData.qty} onChange={handleChange}/>
                 </div>
                 <div className="form-group col-xs-3">
                     <label>Unit of Measure</label>
