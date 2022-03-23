@@ -1,7 +1,7 @@
 class InventoryItemsController < ApplicationController
 
     def index
-        render json: InventoryItem.all
+        render json: InventoryItem.all.order(:name)
     end
 
     def show

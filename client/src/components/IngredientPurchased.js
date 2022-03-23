@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 
 function IngredientPurchased({
   newPurchaseInstance,
@@ -7,18 +7,17 @@ function IngredientPurchased({
   setItemsPurchased,
   setRendering,
   ingredient,
+  formData, 
+  setFormData,
+  setPrompt,
+  setAddFromIngredients,
 }) {
-  const [formData, setFormData] = useState({
-    name: "",
-    qty: "",
-    measure: "",
-    spoil_date: "",
-    purchase_id: "",
-  });
 
-  function handleAddItem(e) {
-    // setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log(e.target.id)
+  function handleAddItem() {
+
+    setFormData({ ...formData, name: ingredient.name });
+    setAddFromIngredients(ingredient)
+    setPrompt("edit")
   }
 
 //   async function handleAddItem(e) {
@@ -56,7 +55,7 @@ function IngredientPurchased({
             <li key={each.id}>{each.title}</li>
         ))}
       </td>
-      <th scope="row" onClick={handleAddItem} id={ingredient.id}>
+      <th scope="row" onClick={handleAddItem}>
         Add Ingredient
       </th>
     </tr>
