@@ -25,8 +25,13 @@ function Inventory ({returnHome, itemsToRender, body, handleItemDelete}) {
                 </thead>
                 <tbody>
                     {itemsToRender.map(item => 
-                        <GroceryItem item={item} key={item.id} body={body} handleDelete={handleItemDelete}/>)
-                    }
+                        <GroceryItem
+                            item={item}
+                            key={item.id}
+                            body={body}
+                            handleDelete={handleItemDelete}
+                        /> 
+                    )}
                 </tbody>
             </table>
         </div>

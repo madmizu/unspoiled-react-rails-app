@@ -1,31 +1,46 @@
+function EachRecipe({ recipe, body, handleDelete }) {
+  const section = body === "recipes" ? "recipes" : "shopping-list";
+    const ingredients = recipe.recipe_ingredients
+  console.log(recipe)
+  console.log(ingredients)
+  return (
+    <tr>
+      <th scope="row" onClick={() => handleDelete(section, recipe.id)}>
+        X
+      </th>
+      <td>{recipe.title}</td>
+      <td className="availableIngredients">
+        <div className="ingredientScroll">
+            {ingredients.map((each => (
+                each.ingredient.in_stock ? <li>{each.qty} {each.measure} {each.ingredient.name}</li> : null
+            )))}
+        </div>
+      </td>
+      <td className="missingIngredients">
+        <div className="ingredientScroll">
 
-function EachRecipe ({}) {
+        {ingredients.map((each => (
+                each.ingredient.in_stock ? null : 
+                <li>
+                    {each.qty} {each.measure}: {each.ingredient.name}
+                <emsp> </emsp>
+                <button className="addToList">+</button>
+                </li>
+            )))}
 
-    function deleteItem () {
-        console.log("removed recipe")
-    }
 
-    return (
-                <tr>
-                        <th scope="row" onClick={deleteItem}>X</th>
-                        <td>Chicken Noodle Soup</td>
-                        <td className="availableIngredients">
-                            <div className="ingredientScroll">
-                                <li>2 Cups: Carrots</li>
-                                <li>2 Cups: Celery</li>
-                                <li>1 Box: Chicken Broth</li>
-                            </div>
-                        </td>
-                        <td className="missingIngredients">
-                            <div className="ingredientScroll">
-                                <li>2 TBSP: Salt    
-                                <emsp> </emsp><button className="addToList">+</button>
-                                </li>
-                            </div>
-                        </td>
-                        <td><button>Edit/Update</button></td>
-                </tr>
-    )
+          <li>
+            2 TBSP: Salt
+            <emsp> </emsp>
+            <button className="addToList">+</button>
+          </li>
+        </div>
+      </td>
+      <td>
+        <button>Edit/Update</button>
+      </td>
+    </tr>
+  );
 }
 
 export default EachRecipe;

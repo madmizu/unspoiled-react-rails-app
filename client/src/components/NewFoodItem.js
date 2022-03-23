@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 
-function NewFoodItem ({ addMoreItems, newPurchaseInstance, createNewItem, itemsPurchased, setItemsPurchased, setRendering} ) {
+function NewFoodItem ({ newPurchaseInstance, createNewItem, itemsPurchased, setItemsPurchased, setRendering} ) {
     const [formData,setFormData] = useState({
         name:'',
         qty:'',
@@ -11,6 +11,7 @@ function NewFoodItem ({ addMoreItems, newPurchaseInstance, createNewItem, itemsP
     })
 
     function handleChange (e) {
+
         setFormData({...formData, [e.target.name]:e.target.value})
     }
 
@@ -46,7 +47,7 @@ function NewFoodItem ({ addMoreItems, newPurchaseInstance, createNewItem, itemsP
 
         <form onSubmit={handleAddItem}>
             <div className="newItems">
-                <h5>Add Items Purchased: </h5>
+
                 <div className="form-group col-xs-3">   
                     <label>Item Name</label>
                     <input 
