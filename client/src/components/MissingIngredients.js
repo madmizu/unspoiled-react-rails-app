@@ -1,6 +1,4 @@
 function MissingIngredients({ each, ingredient,addToShoppingList, setBody, setAllIngredients}) {
-console.log(each)
-console.log(ingredient)
 
 async function addToWishlist () {
   const itemInfo = {
@@ -35,7 +33,7 @@ function displayNewItems () {
     </li> :
     <li className="missingIngredients">
       {each.qty} {each.measure} {each.ingredient.name}
-      <emsp> </emsp>
+      <emsp>   </emsp>
       <button className="wishlist" onClick={addToWishlist}>Add to Shopping List</button>
     </li>
     }

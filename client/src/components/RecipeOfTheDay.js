@@ -1,17 +1,6 @@
 import MissingIngredients from "./MissingIngredients.js";
 
-function RecipeOfTheDay({
-  inventory,
-  allIngredients,
-  recipeOTD,
-  setBody,
-  addToShoppingList,
-  setAllIngredients,
-}) {
-
-  console.log(recipeOTD.recipe_ingredients)
-  console.log(allIngredients)
-
+function RecipeOfTheDay({ recipeOTD }) {
   return (
     <div>
       <br />
@@ -20,32 +9,38 @@ function RecipeOfTheDay({
       <div className="recipeOfTheDay">
         <br />
         <table className="table text-center border">
-          {/* <thead>
-          <tr>
-            <th scope="col">Recipe Of The Day</th>
-          </tr>
-        </thead> */}
           <tbody>
             <tr>
-            <img className="recipeImage" src={recipeOTD.image} alt={recipeOTD.title}/>
-
-              <th id="recipeOTD" className="align-middle">{recipeOTD.title}</th>
+              <th>
+                <img
+                  className="recipeImage"
+                  src={recipeOTD.image}
+                  alt={recipeOTD.title}
+                />
+              </th>
+              <td id="recipeOTD" className="align-middle">
+                {recipeOTD.title}
+              </td>
               <td className="align-middle">
                 <div className="ingredientScroll">
-                  {recipeOTD && recipeOTD.recipe_ingredients
-                    ? 
+                  {recipeOTD && recipeOTD.recipe_ingredients ? (
                     recipeOTD.recipe_ingredients.map((each) => {
-                      const index = recipeOTD.recipe_ingredients.indexOf(each)
-                      return ( 
-                        <li className="availableIngredients">
-                        {each.qty} {each.measure} {recipeOTD.ingredients[index].name}
-                    </li>   
-                        )}) : <li>DOENST WORK</li>
-
-                    }
+                      const index = recipeOTD.recipe_ingredients.indexOf(each);
+                      return (
+                        <li key={each.id} className="availableIngredients">
+                          {each.qty} {each.measure}{" "}
+                          {recipeOTD.ingredients[index].name}
+                        </li>
+                      );
+                    })
+                  ) : (
+                    <li>Loading...</li>
+                  )}
                 </div>
               </td>
-                <button >View Recipe</button>
+              <td className="align-middle">
+                <button>View Recipe</button>
+              </td>
             </tr>
           </tbody>
         </table>

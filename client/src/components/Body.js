@@ -1,5 +1,5 @@
 import SectionCard from "./SectionCard.js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Purchases from "./Purchases.js";
 import Inventory from "./Inventory.js";
 import Recipes from "./Recipes.js";
@@ -19,6 +19,33 @@ function Body({
   recipeOTD,
 }) {
   const [body, setBody] = useState("home");
+  const [inStockRecipes, setInStockRecipes] = useState([]);
+
+  function setCookableRecipes() {
+    ;
+
+    for (const recipe of allRecipes) {
+      const inStockIngredients = []
+      const ingredientList = recipe.recipe_ingredients;
+
+
+            for (const each of ingredientList) {
+              if(each.ingredient.inventory_item) {
+
+                inStockIngredients.push(1);
+              }
+              // when we reach the last ingredient in the array...
+              if(ingredientList.indexOf(each) === ingredientList.length-1) {
+                if(ingredientList.length === inStockIngredients.length) {
+                        inStockRecipes.push(recipe);
+                        setInStockRecipes(inStockRecipes);
+                  }
+              }
+            }
+    }
+  }
+
+  console.log("5 - inStockRecipes", inStockRecipes);
 
   return (
     <>
@@ -49,18 +76,14 @@ function Body({
               <div className="col-sm-3 border">
                 <SectionCard
                   title="Cook It"
-                  changeSection={() => setBody("recipes")}
+                  changeSection={() => {
+                    setBody("recipes");
+                    setCookableRecipes();
+                  }}
                 />
               </div>
               <div className="col-12">
-                <RecipeOfTheDay
-                  inventory={inventory}
-                  allIngredients={allIngredients}
-                  recipeOTD={recipeOTD}
-                  setBody={setBody}
-                  addToShoppingList={addToShoppingList}
-                  setAllIngredients={setAllIngredients}
-                />
+                <RecipeOfTheDay recipeOTD={recipeOTD} />
               </div>
               <br />
               <div className="foodLoop">
@@ -113,6 +136,7 @@ function Body({
               setBody={setBody}
               addToShoppingList={addToShoppingList}
               setAllIngredients={setAllIngredients}
+              inStockRecipes={inStockRecipes}
             />
           ) : null}
         </div>
