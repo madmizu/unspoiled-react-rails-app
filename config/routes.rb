@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   
   resources :recipe_ingredients #all routes
+  resources :inventory_items #all routes
   resources :shopping_list_items #all routes
   resources :ingredients #all routes
   resources :recipes #all routes
-  resources :inventory_items #all routes
+
   resources :purchases, only: [:index, :show, :create, :destroy] #no update
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!

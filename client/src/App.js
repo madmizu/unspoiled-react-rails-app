@@ -40,13 +40,11 @@ function App() {
         method:'DELETE',
         headers:{'Content-Type':'application/json'}
     })
-    .then(res => res.json())
-    .then(data => {
-      section === "inventory" ?
+    .then(res => res.json()
+    .then( section === "inventory_items" ?
       setInventory(inventory.filter(item => item.id !== id)) :
       setShoppingList(shoppingList.filter(item => item.id !== id))
-      console.log(data)
-    })
+    ))
   }
 
   // Create new purchase instance
@@ -82,6 +80,21 @@ function App() {
    
   }
 
+    // Create new shopping list item 
+    function addToShoppingList (data) {
+      fetch('/shopping_list_items',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(data)
+        })
+        .then(res => {
+            res.json()
+            .then(newItems => {
+            setShoppingList([newItems,...shoppingList])
+          })
+        })   
+    }
+
   return (
     <div className="container-fluid border">
       <Header />
@@ -95,6 +108,8 @@ function App() {
         newPurchaseInstance={newPurchaseInstance}
         allRecipes={allRecipes}
         allIngredients={allIngredients}
+        addToShoppingList={addToShoppingList}
+        setAllIngredients={setAllIngredients}
       />      
       <HomeImage />
     </div>

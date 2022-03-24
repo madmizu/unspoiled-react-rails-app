@@ -13,6 +13,8 @@ function Body({
   createNewItem,
   allRecipes,
   allIngredients,
+  addToShoppingList,
+  setAllIngredients,
 }) {
   const [body, setBody] = useState("home");
 
@@ -75,6 +77,7 @@ function Body({
             itemsToRender={inventory}
             handleItemDelete={handleItemDelete}
             body={body}
+            allIngredients={allIngredients}
           />
         ) : null}
         {body === "shoppingList" ? (
@@ -83,6 +86,7 @@ function Body({
             itemsToRender={shoppingList}
             handleItemDelete={handleItemDelete}
             body={body}
+            allIngredients={allIngredients}
           />
         ) : null}
         {body === "recipes" ? (
@@ -90,6 +94,10 @@ function Body({
           itemsToRender={allRecipes}
           handleItemDelete={handleItemDelete}
           body={body}
+          setBody={setBody}
+          allIngredients={allIngredients}
+          addToShoppingList={addToShoppingList}
+          setAllIngredients={setAllIngredients}
           />
         ) : null}
       </div>

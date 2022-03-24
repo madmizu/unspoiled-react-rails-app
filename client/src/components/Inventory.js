@@ -1,7 +1,7 @@
 import SectionCard from './SectionCard';
 import GroceryItem from './GroceryItem';
 
-function Inventory ({returnHome, itemsToRender, body, handleItemDelete}) {
+function Inventory ({returnHome, itemsToRender, body, handleItemDelete, allIngredients}) {
 
     console.log(itemsToRender)
     return (
@@ -30,6 +30,7 @@ function Inventory ({returnHome, itemsToRender, body, handleItemDelete}) {
                             key={item.id}
                             body={body}
                             handleDelete={handleItemDelete}
+                            allIngredients={allIngredients}
                         /> 
                     )}
                 </tbody>

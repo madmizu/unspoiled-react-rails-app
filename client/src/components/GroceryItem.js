@@ -1,5 +1,5 @@
-function GroceryItem({ item, handleDelete, body }) {
-  const section = body === "inventory" ? "inventory" : "shopping-list";
+function GroceryItem({ item, handleDelete, body, allIngredients}) {
+  const section = body === "inventory" ? "inventory_items" : "shopping_list_items";
   let i = 0;
   function renderRecipes(name) {
     i++;
@@ -12,16 +12,11 @@ function GroceryItem({ item, handleDelete, body }) {
         X
       </th>
       {body === "inventory" ? <td>{item.spoil_date}</td> : null}
-      {body === "inventory" ? (
-        <td> {item.name} </td>
-      ) : (
-        <td> {item.ingredient.name} </td>
-      )}
-      <td>
-        {item.qty} x {item.measure}
-      </td>
-      {/* <td>{item.grocery_item.recipe_ingredients.map(item=>item.recipe.recipe_name).map(name=>renderRecipes(name))}
-            </td> */}
+      <td> {item.ingredient.name} </td>
+      <td> {item.qty} x {item.measure} </td>
+      <td> {allIngredients.find ((i) => i.id === item.ingredient.id).recipes.map ((each) => (
+             <li key={each.id}> {each.title} </li>
+      ))}  </td>
     </tr>
   );
 }

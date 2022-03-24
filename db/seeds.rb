@@ -13,11 +13,6 @@ puts "🌱 Seeding..."
         5.times do
             Purchase.create({date: Faker::Date.between(from: '2021-12-23', to: '2022-01-06') })
         end
-
-    puts "Creating Inventory Items..."    #name, qty, measure, spoil_date, purchaseID
-        10.times do
-            InventoryItem.create({name: Faker::Food.ingredient, qty: rand(1..10), measure: Faker::Food.measurement, spoil_date: Faker::Date.between(from: '2022-03-15', to: '2022-06-28'), purchase_id: Purchase.all.sample.id} )
-        end
         
     puts "Creating Ingredients..." #name, in_stock?
         # 10.times  do
@@ -51,6 +46,11 @@ puts "🌱 Seeding..."
         Ingredient.create({name: "BBQ Sauce", in_stock:false})
         # Ingredient.create({name: "Ranch Seasoning Mix", in_stock:false}) - already created
         Ingredient.create({name: "Bacon", in_stock:false})
+
+    puts "Creating Inventory Items..."    #name, qty, measure, spoil_date, purchaseID
+        8.times do
+            InventoryItem.create({qty: rand(1..10), measure: Faker::Food.measurement, spoil_date: Faker::Date.between(from: '2022-03-15', to: '2022-06-28'), purchase_id: Purchase.all.sample.id, ingredient_id: Ingredient.all.sample.id} )
+        end
 
     puts "Creating Recipes..." #title, link, image
         # 10.times do
@@ -220,7 +220,7 @@ puts "🌱 Seeding..."
         })
 
     puts "Creating Shopping List Items..." #qty, measure, ingredientID
-    10.times do
+    5.times do
         ShoppingListItem.create({qty: rand(1..10),measure: Faker::Food.measurement, ingredient_id: Ingredient.all.sample.id} )
     end
 

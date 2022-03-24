@@ -1,5 +1,6 @@
 class Ingredient < ApplicationRecord
     has_one :shopping_list_item
+    has_one :inventory_item
 
 
     has_many :recipe_ingredients

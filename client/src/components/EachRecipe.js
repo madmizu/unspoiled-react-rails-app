@@ -1,39 +1,50 @@
-function EachRecipe({ recipe, body, handleDelete }) {
-  const section = body === "recipes" ? "recipes" : "shopping-list";
-    const ingredients = recipe.recipe_ingredients
-  console.log(recipe)
-  console.log(ingredients)
+import MissingIngredients from "./MissingIngredients.js";
+
+function EachRecipe({
+  recipe,
+  body,
+  setBody,
+  handleDelete,
+  allIngredients,
+  addToShoppingList,
+  setAllIngredients,
+}) {
+  const recipeIngredients = recipe.recipe_ingredients;
+
   return (
     <tr>
-      <th scope="row" onClick={() => handleDelete(section, recipe.id)}>
+      <th scope="row" onClick={() => handleDelete("recipes", recipe.id)}>
         X
       </th>
       <td>{recipe.title}</td>
       <td className="availableIngredients">
         <div className="ingredientScroll">
-            {ingredients.map((each => (
-                each.ingredient.in_stock ? <li>{each.qty} {each.measure} {each.ingredient.name}</li> : null
-            )))}
+          {recipeIngredients.map((each) =>
+            allIngredients.find((i) => i.id === each.ingredient.id)
+              .inventory_item ? (
+              <li>
+                {each.qty} {each.measure} {each.ingredient.name}
+              </li>
+            ) : null
+          )}
         </div>
       </td>
-      <td className="missingIngredients">
+      <td>
         <div className="ingredientScroll">
-
-        {ingredients.map((each => (
-                each.ingredient.in_stock ? null : 
-                <li>
-                    {each.qty} {each.measure}: {each.ingredient.name}
-                <emsp> </emsp>
-                <button className="addToList">+</button>
-                </li>
-            )))}
-
-
-          <li>
-            2 TBSP: Salt
-            <emsp> </emsp>
-            <button className="addToList">+</button>
-          </li>
+          {recipeIngredients.map((each) => {
+            const instance = allIngredients.find(
+              (i) => i.id === each.ingredient.id
+            );
+            return instance.inventory_item ? null : (
+              <MissingIngredients
+                each={each}
+                ingredient={instance}
+                addToShoppingList={addToShoppingList}
+                setBody={setBody}
+                setAllIngredients={setAllIngredients}
+              />
+            );
+          })}
         </div>
       </td>
       <td>
