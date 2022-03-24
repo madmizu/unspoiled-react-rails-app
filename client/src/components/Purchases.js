@@ -11,18 +11,23 @@ function Purchases({
   allIngredients,
 }) {
   const [itemsPurchased, setItemsPurchased] = useState([]);
+  const [ingredientsPurchased, setIngredientsPurchased] = useState([]);
   const [rendering, setRendering] = useState("purchases");
   const [prompt, setPrompt] = useState("new");
-  const [addFromIngredients, setAddFromIngredients] = useState({});
+  const [addedFromIngredients, setAddedFromIngredients] = useState({});
   const [purchaseData, setPurchaseData] = useState({
     date: "",
   });
   const [formData, setFormData] = useState({
-    name: "",
     qty: "",
     measure: "",
     spoil_date: "",
     purchase_id: "",
+    ingredient_id: "",
+  });
+  const [ingredientData, setIngredientData] = useState({
+    name: "",
+    in_stock: "true",
   });
 
   // upon submitting form, sends data to POST request to create new Purchase instance
@@ -53,10 +58,14 @@ function Purchases({
         <div className="purchases">
           {/* Once date of new purchase is submitted, this will render on the page to allow user to submit items on the transaction */}
           <h4>Date of Purchase {purchaseData.date} </h4>
+          <br/>
           {itemsPurchased[0] ? (
+            <>
+            <h5>Items in this Purchase:</h5>
+            
             <table className="table" id="inventoryTable">
-              <h5>Items in this Purchase:</h5>
-              <thead>
+
+              <thead className="table-warning">
                 <tr>
                   <th scope="col">Item Name</th>
                   <th scope="col">Quantity</th>
@@ -64,10 +73,17 @@ function Purchases({
                 </tr>
               </thead>
               <tbody>
+                {/* {ingredientsPurchased.map((each) => (
+                      <td key={ingredientsPurchased.indexOf(each)}>
+                        {each.name}
+                      </td>
+                    ))} */}
                 {itemsPurchased.map((item) => (
-                  <tr key={item.name + item.spoil_date}>
-                    <td>{item.name}</td>
-                    <td>
+                  <tr key={itemsPurchased.indexOf(item)}>
+                      <td>
+                        {ingredientsPurchased[itemsPurchased.indexOf(item)].name}
+                      </td>
+                    <td >
                       {item.qty} x {item.measure}
                     </td>
                     <td>{item.spoil_date}</td>
@@ -75,6 +91,7 @@ function Purchases({
                 ))}
               </tbody>
             </table>
+            </>
           ) : null}
           {/* This component renders a form line for each ingredient in database. */}
           <div className="ingredientScroll" style={{ height: "18%" }}>
@@ -95,16 +112,14 @@ function Purchases({
               <tbody id="ingredientTable">
                 {allIngredients.map((each) => (
                   <IngredientPurchased
-                    createNewItem={createNewItem}
-                    itemsPurchased={itemsPurchased}
-                    setItemsPurchased={setItemsPurchased}
-                    setRendering={setRendering}
-                    newPurchaseInstance={newPurchaseInstance}
+                    key={each.id}
                     ingredient={each}
                     formData={formData}
                     setFormData={setFormData}
                     setPrompt={setPrompt}
-                    setAddFromIngredients={setAddFromIngredients}
+                    setAddedFromIngredients={setAddedFromIngredients}
+                    setIngredientData={setIngredientData}
+                    ingredientData={ingredientData}
                   />
                 ))}
               </tbody>
@@ -121,8 +136,8 @@ function Purchases({
             </>
           ) : (
             <>
-            <br />
-            <h4> Use the form below if the item is not listed above </h4>
+              <br />
+              <h4> Use the form below if the item is not listed above </h4>
             </>
           )}
 
@@ -137,7 +152,12 @@ function Purchases({
             setFormData={setFormData}
             prompt={prompt}
             setPrompt={setPrompt}
-            addFromIngredients={addFromIngredients}
+            setAddedFromIngredients={setAddedFromIngredients}
+            addedFromIngredients={addedFromIngredients}
+            setIngredientData={setIngredientData}
+            ingredientData={ingredientData}
+            ingredientsPurchased={ingredientsPurchased}
+            setIngredientsPurchased={setIngredientsPurchased}
           />
         </div>
       ) : (

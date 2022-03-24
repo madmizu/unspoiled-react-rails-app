@@ -48,7 +48,7 @@ function EachRecipe({
         </div>
       </td>
       <td>
-        <button>Edit/Update</button>
+        <button>View Recipe</button>
       </td>
     </tr>
   );

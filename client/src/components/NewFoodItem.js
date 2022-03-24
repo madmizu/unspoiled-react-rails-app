@@ -1,30 +1,54 @@
 
 
-function NewFoodItem ({ newPurchaseInstance, createNewItem, itemsPurchased, setItemsPurchased, setRendering, formData, setFormData, setPrompt, prompt, addFromIngredients} ) {
+function NewFoodItem ({
+    newPurchaseInstance,
+    createNewItem,
+    itemsPurchased,
+    setItemsPurchased,
+    setRendering,
+    formData,
+    setFormData,
+    setPrompt,
+    prompt,
+    addedFromIngredients,
+    setAddedFromIngredients,
+    setIngredientData,
+    ingredientData,
+    ingredientsPurchased,
+    setIngredientsPurchased
+} ) {
 
     function handleChange (e) {
+        if (e.target.name === "name") {
+            setIngredientData({...ingredientData, name: e.target.value})
+        } else {
+            setFormData({...formData, [e.target.name]:e.target.value})
+        }
 
-        setFormData({...formData, [e.target.name]:e.target.value})
     }
-
+console.log(itemsPurchased)
     async function handleAddItem (e) {
         e.preventDefault()
-        if(prompt === "edit") {
-            console.log(addFromIngredients)
-        }
         setRendering("purchases")
-        const addedItem = ({...formData, purchase_id:newPurchaseInstance.id})
-        itemsPurchased.push(addedItem)
-        setItemsPurchased(itemsPurchased)
+            const addedItem = ({...formData, purchase_id:newPurchaseInstance.id})
+            itemsPurchased.push(addedItem)
+            setItemsPurchased(itemsPurchased)
+            ingredientsPurchased.push(ingredientData)
+            setIngredientsPurchased(ingredientsPurchased)
         await displayNewItems()
         setFormData({
-            name:'',
             qty:'',
             measure:'',
             spoil_date:'',
-            purchase_id: ''
+            purchase_id: '',
+            ingredient_id: '',
         })
         setPrompt("new")
+        setIngredientData({
+            name: "",
+            in_stock: "true",
+          })
+        setAddedFromIngredients({})
     }
 
     function displayNewItems () {
@@ -35,9 +59,16 @@ function NewFoodItem ({ newPurchaseInstance, createNewItem, itemsPurchased, setI
         })
     }
 
-    function handleSubmitPurchase (e) {
-        console.log("clicked")
+    async function handleSubmitPurchase (e) {
         for (let i=0; i<itemsPurchased.length; i++) {
+            if(itemsPurchased[i].ingredient_id) {
+                createNewItem(itemsPurchased[i]) 
+            } else {
+                const newIngredient = await createNewItem(ingredientsPurchased[i])
+                console.log(newIngredient)
+
+                const newInfo = ({...itemsPurchased[i], ingredient_id: "NEW NUM"})
+            }
         createNewItem(itemsPurchased[i])  
         }
         setItemsPurchased([])
@@ -53,12 +84,15 @@ function NewFoodItem ({ newPurchaseInstance, createNewItem, itemsPurchased, setI
 
                 <div className="form-group col-xs-3">   
                     <label>Item Name</label>
-                    <input 
+                    {addedFromIngredients.name ? <p>{addedFromIngredients.name}</p>
+                    : <input 
                         name="name"
-                        value={formData.name}
+                        value={ingredientData.name}
                         placeholder="Enter Item here..."
                         onChange={handleChange}
                     />
+                    }
+                    
                 </div>
                 <div className="form-group col-xs-3">
                     <label>Quantity</label>
