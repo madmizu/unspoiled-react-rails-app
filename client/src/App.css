@@ -42,7 +42,7 @@
 
 .wishlistIngredients {
   text-align: left;
-  color: rgb(28, 190, 114);
+  color: aquamarine;
 }
 
 .recipeRow {
@@ -124,7 +124,7 @@ h3 {
 .recipeImage {
   max-width: 60%;
   height: auto;
-  margin-left: -300px;
+  margin-left: -200px;
   margin-right: -200px;
 }
 
@@ -137,6 +137,10 @@ h3 {
 }
 
 #recipeOTD {
-  font-size: 50px;
+  font-size: 30px;
   font-family: 'Slackey', cursive; 
+}
+
+.recipesAvailable {
+  background-color: aquamarine;
 }

@@ -33,8 +33,12 @@ function Purchases({
   // upon submitting form, sends data to POST request to create new Purchase instance
   function handlePurchaseDateSubmit(e) {
     e.preventDefault();
-    setRendering("newItems");
+    if(purchaseData.date) {
+          setRendering("newItems");
     createNewPurchase(purchaseData);
+    } else {
+      alert("Please enter a valid date.")
+    }
   }
 
   // handles change of date on form and sets state for purchase date which is passed into POST request for new Purchase instance

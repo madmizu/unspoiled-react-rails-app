@@ -22,7 +22,7 @@ function EachRecipe({
           {recipeIngredients.map((each) =>
             allIngredients.find((i) => i.id === each.ingredient.id)
               .inventory_item ? (
-              <li>
+              <li key={each.id}>
                 {each.qty} {each.measure} {each.ingredient.name}
               </li>
             ) : null
@@ -37,6 +37,7 @@ function EachRecipe({
             );
             return instance.inventory_item ? null : (
               <MissingIngredients
+                key={(each.id)}
                 each={each}
                 ingredient={instance}
                 addToShoppingList={addToShoppingList}
