@@ -1,4 +1,5 @@
 class InventoryItemSerializer < ActiveModel::Serializer
-  attributes :id, :name, :qty, :measure, :spoil_date
-  belongs_to :purchase
+  attributes :id, :qty, :measure, :spoil_date
+  has_one :purchase
+  belongs_to :ingredient
 end

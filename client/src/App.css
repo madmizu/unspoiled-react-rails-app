@@ -86,6 +86,11 @@ font-family: 'Walter Turncoat', cursive; */
   color: red;
 }
 
+.wishlistIngredients {
+  text-align: left;
+  color: rgb(28, 190, 114);
+}
+
 .recipeRow {
   height: fixed, 50px;
   overflow: hidden;
@@ -96,7 +101,7 @@ font-family: 'Walter Turncoat', cursive; */
   height: 100px;
 }
 
-.addToList {
+.wishlist {
   font-size: 10px;
   vertical-align: text-bottom;
 }

@@ -1,7 +1,7 @@
 import SectionCard from "./SectionCard";
 import EachRecipe from "./EachRecipe";
 
-function Recipes({ returnHome, itemsToRender, handleItemDelete, body }) {
+function Recipes({ returnHome, itemsToRender, handleItemDelete, body, setBody, allIngredients, addToShoppingList, setAllIngredients}) {
   return (
     <div className="recipes">
       <div className="col-sm-12">
@@ -16,7 +16,7 @@ function Recipes({ returnHome, itemsToRender, handleItemDelete, body }) {
           <tr>
             <th scope="col"></th>
             <th scope="col">Name</th>
-            <th scope="col">Ingredients Available</th>
+            <th scope="col">Ingredients In Stock</th>
             <th scope="col">Ingredients Missing</th>
           </tr>
         </thead>
@@ -27,6 +27,10 @@ function Recipes({ returnHome, itemsToRender, handleItemDelete, body }) {
               key={recipe.id}
               body={body}
               handleDelete={handleItemDelete}
+              allIngredients={allIngredients}
+              addToShoppingList={addToShoppingList}
+              setBody={setBody}
+              setAllIngredients={setAllIngredients}
             />
           ))}
         </tbody>
