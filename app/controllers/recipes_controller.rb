@@ -8,6 +8,12 @@ class RecipesController < ApplicationController
         render json: recipe, status: :ok
     end
 
+    def recipe_of_the_day
+        nextToSpoil = Ingredient.find(InventoryItem.all.order(:spoil_date).first.ingredient_id)
+        recipe = nextToSpoil.recipes[0]
+        render json: recipe, status: :ok
+    end
+
     def create
         recipe = Recipe.create!(recipe_params)
         render json: recipe, status: :created

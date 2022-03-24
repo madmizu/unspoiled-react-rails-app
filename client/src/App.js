@@ -12,6 +12,7 @@ function App() {
   const [newPurchaseInstance,setNewPurchaseInstance] = useState();
   const [allRecipes, setAllRecipes] = useState([]);
   const [allIngredients, setAllIngredients] = useState([]);
+  const [recipeOTD, setRecipeOTD] = useState({})
 
   // READ: fetch request for data from local API
   useEffect(()=> {
@@ -31,7 +32,12 @@ function App() {
     fetch('/ingredients')
     .then(res => res.json())
     .then(setAllIngredients)
+    //get recipe of the day
+    fetch('/ROD')
+    .then(res => res.json())
+    .then(setRecipeOTD)
   }, [])
+
 
   // DELETE: Removes item from Inventory or Shopping List & resets state accordingly
   function handleItemDelete (section, id) {
@@ -110,6 +116,7 @@ function App() {
         allIngredients={allIngredients}
         addToShoppingList={addToShoppingList}
         setAllIngredients={setAllIngredients}
+        recipeOTD={recipeOTD}
       />      
       <HomeImage />
     </div>
