@@ -2,50 +2,6 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-/* font-family: 'Amatic SC', cursive;
-font-family: 'Give You Glory', cursive;
-font-family: 'Nosifer', cursive;
-font-family: 'Saira Stencil One', cursive;
-font-family: 'Slackey', cursive;
-font-family: 'Swanky and Moo Moo', cursive;
-font-family: 'Vast Shadow', cursive;
-font-family: 'Walter Turncoat', cursive; */
-
-
 .header {
   background-color: rgb(230, 188, 0);
   text-align: center;
@@ -69,8 +25,6 @@ font-family: 'Walter Turncoat', cursive; */
 
 .sections {
   font-family: 'Slackey', cursive; 
-  /* padding: 30px;
-  margin: 10px; */
 }
 
 .card-text {
@@ -106,7 +60,6 @@ font-family: 'Walter Turncoat', cursive; */
   vertical-align: text-bottom;
 }
 
-
 .form-group col-md-4 {
   display: flex;
 }
@@ -140,24 +93,50 @@ font-family: 'Walter Turncoat', cursive; */
 .renderItems {
   display: inline-flex;
 }
+
 h3 {
   text-align: center;
 }
 
 .movingFood {
-  width: auto;
-  height: 350px;
-}
-
-.foodLoop {
-  text-align: center;
+  width: 90vw;
+  height: auto;
+  margin-left: -10px;
 }
 
 .movingFoodCont {
   text-align: center;
 }
 
+.foodLoop {
+  text-align: center;
+}
+
 .tableHead {
   position:sticky;
   top: 0;
+}
+
+.recipeOTD {
+  text-align: center;
+}
+
+.recipeImage {
+  max-width: 60%;
+  height: auto;
+  margin-left: -300px;
+  margin-right: -200px;
+}
+
+.align-middle {
+  text-align: left;
+}
+
+.recipeOfTheDay {
+  -ms-flex-align: center;
+}
+
+#recipeOTD {
+  font-size: 50px;
+  font-family: 'Slackey', cursive; 
 }
