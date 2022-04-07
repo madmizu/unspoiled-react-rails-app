@@ -2,7 +2,6 @@ import MissingIngredients from "./MissingIngredients.js";
 
 function EachRecipe({
   recipe,
-  body,
   setBody,
   handleDelete,
   allIngredients,

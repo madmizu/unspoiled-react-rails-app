@@ -8,7 +8,6 @@ import Home from "./components/Home.js";
 import HomeImage from "./components/HomeImage.js";
 import Purchases from "./components/Purchases.js";
 import Inventory from "./components/Inventory.js";
-import ShoppingList from "./components/ShoppingList.js";
 import Recipes from "./components/Recipes.js";
 
 function App() {
@@ -19,6 +18,8 @@ function App() {
   const [allRecipes, setAllRecipes] = useState([]);
   const [allIngredients, setAllIngredients] = useState([]);
   const [recipeOTD, setRecipeOTD] = useState({});
+  const [inStockRecipes, setInStockRecipes] = useState([]);
+  const [body, setBody] = useState("home");
 
   // READ: fetch request for data from local API
   useEffect(() => {
@@ -103,11 +104,37 @@ function App() {
     });
   }
 
+
+
+  function setCookableRecipes() {
+    ;
+
+    for (const recipe of allRecipes) {
+      const inStockIngredients = []
+      const ingredientList = recipe.recipe_ingredients;
+
+
+            for (const each of ingredientList) {
+              if(each.ingredient.inventory_item) {
+
+                inStockIngredients.push(1);
+              }
+              // when we reach the last ingredient in the array...
+              if(ingredientList.indexOf(each) === ingredientList.length-1) {
+                if(ingredientList.length === inStockIngredients.length) {
+                        inStockRecipes.push(recipe);
+                        setInStockRecipes(inStockRecipes);
+                  }
+              }
+            }
+    }
+  }
+
   return (
     <Router>
       <div className="container-fluid border">
         <Header />
-        <Navbar />
+        <Navbar setCookableRecipes={setCookableRecipes} setBody={setBody}/>
         <Routes>
           <Route
             path="/"
@@ -132,7 +159,6 @@ function App() {
             path="/purchases"
             element={
               <Purchases
-                returnHome={console.log("home")}
                 createNewPurchase={createNewPurchase}
                 createNewItem={createNewItem}
                 newPurchaseInstance={newPurchaseInstance}
@@ -148,17 +174,18 @@ function App() {
                 itemsToRender={inventory}
                 handleItemDelete={handleItemDelete}
                 allIngredients={allIngredients}
+                body={body}
               />
             }
           ></Route>
           <Route
             path="/shopping-list"
             element={
-              <ShoppingList
-                returnHome={console.log("home")}
+              <Inventory
                 itemsToRender={shoppingList}
                 handleItemDelete={handleItemDelete}
                 allIngredients={allIngredients}
+                body={body}
               />
             }
           ></Route>
@@ -166,12 +193,12 @@ function App() {
             path="/recipes"
             element={
               <Recipes
-                returnHome={console.log("home")}
                 itemsToRender={allRecipes}
                 handleItemDelete={handleItemDelete}
                 allIngredients={allIngredients}
                 addToShoppingList={addToShoppingList}
                 setAllIngredients={setAllIngredients}
+                inStockRecipes={inStockRecipes}
               />
             }
           ></Route>

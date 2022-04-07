@@ -2,6 +2,7 @@ import SectionCard from "./SectionCard";
 import NewFoodItem from "./NewFoodItem";
 import IngredientPurchased from "./IngredientPurchased";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Purchases({
   returnHome,
@@ -33,11 +34,11 @@ function Purchases({
   // upon submitting form, sends data to POST request to create new Purchase instance
   function handlePurchaseDateSubmit(e) {
     e.preventDefault();
-    if(purchaseData.date) {
-          setRendering("newItems");
-    createNewPurchase(purchaseData);
+    if (purchaseData.date) {
+      setRendering("newItems");
+      createNewPurchase(purchaseData);
     } else {
-      alert("Please enter a valid date.")
+      alert("Please enter a valid date.");
     }
   }
 
@@ -48,12 +49,18 @@ function Purchases({
 
   return (
     <>
+      <div class="row justify-content-md-center">
+        <div className="col-sm-3">
+          <Link className="navbar-links" to="/">
+            Return Home
+          </Link>
+        </div>
+      </div>
+      <br />
       <div className="col-sm-12">
         <SectionCard title="Bought It - Add New Purchases" />
       </div>
-      <div className="col-sm-12">
-        <SectionCard title="Return Home" changeSection={returnHome} />
-      </div>
+
       <br />
       {rendering === "purchased" ? (
         <p>New items have been added to your inventory!</p>
@@ -62,39 +69,41 @@ function Purchases({
         <div className="purchases">
           {/* Once date of new purchase is submitted, this will render on the page to allow user to submit items on the transaction */}
           <h4>Date of Purchase {purchaseData.date} </h4>
-          <br/>
+          <br />
           {itemsPurchased[0] ? (
             <>
-            <h5>Items in this Purchase:</h5>
-            
-            <table className="table" id="inventoryTable">
+              <h5>Items in this Purchase:</h5>
 
-              <thead className="table-warning">
-                <tr>
-                  <th scope="col">Item Name</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Spoil Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {/* {ingredientsPurchased.map((each) => (
+              <table className="table" id="inventoryTable">
+                <thead className="table-warning">
+                  <tr>
+                    <th scope="col">Item Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Spoil Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* {ingredientsPurchased.map((each) => (
                       <td key={ingredientsPurchased.indexOf(each)}>
                         {each.name}
                       </td>
                     ))} */}
-                {itemsPurchased.map((item) => (
-                  <tr key={itemsPurchased.indexOf(item)}>
+                  {itemsPurchased.map((item) => (
+                    <tr key={itemsPurchased.indexOf(item)}>
                       <td>
-                        {ingredientsPurchased[itemsPurchased.indexOf(item)].name}
+                        {
+                          ingredientsPurchased[itemsPurchased.indexOf(item)]
+                            .name
+                        }
                       </td>
-                    <td >
-                      {item.qty} x {item.measure}
-                    </td>
-                    <td>{item.spoil_date}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      <td>
+                        {item.qty} x {item.measure}
+                      </td>
+                      <td>{item.spoil_date}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </>
           ) : null}
           {/* This component renders a form line for each ingredient in database. */}

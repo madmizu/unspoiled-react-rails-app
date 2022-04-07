@@ -1,4 +1,3 @@
-import MissingIngredients from "./MissingIngredients.js";
 
 function RecipeOfTheDay({ recipeOTD }) {
   return (

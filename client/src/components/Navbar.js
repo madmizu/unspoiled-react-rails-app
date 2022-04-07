@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "../App.css";
 
-function Navbar() {
+function Navbar({setCookableRecipes, setBody}) {
   return (
     <>
 
@@ -13,17 +13,17 @@ function Navbar() {
                 </Link>
               </div>
               <div className="col-sm-3 border">
-                <Link className="navbar-links" to="/inventory">
+                <Link className="navbar-links" to="/inventory" onClick={()=> setBody("inventory")}>
                   Have It
                 </Link>
               </div>
               <div className="col-sm-3 border">
-                <Link className="navbar-links" to="/shopping-list">
+                <Link className="navbar-links" to="/shopping-list" onClick={()=> setBody("shopping-list")}>
                   Need It
                 </Link>
               </div>
               <div className="col-sm-3 border">
-                <Link className="navbar-links" to="/recipes">
+                <Link className="navbar-links" to="/recipes" onClick={()=> setCookableRecipes()}>
                   Cook It
                 </Link>
               </div>

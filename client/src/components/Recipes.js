@@ -1,9 +1,7 @@
-import SectionCard from "./SectionCard";
 import EachRecipe from "./EachRecipe";
-// import { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 
 function Recipes({
-  returnHome,
   itemsToRender,
   handleItemDelete,
   body,
@@ -15,11 +13,12 @@ function Recipes({
 }) {
   return (
     <div className="recipes">
-      <div className="col-sm-12">
-        <SectionCard title="Cook It - Recipes" />
-      </div>
-      <div className="col-sm-12">
-        <SectionCard title="Return Home" changeSection={returnHome} />
+      <div class="row justify-content-md-center">
+        <div className="col-sm-3">
+          <Link className="navbar-links" to="/">
+            Return Home
+          </Link>
+        </div>
       </div>
       <div className="recipesAvailable">
         {inStockRecipes[0] ? (
